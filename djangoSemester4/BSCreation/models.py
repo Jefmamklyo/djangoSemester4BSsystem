@@ -20,16 +20,18 @@ class UserManagerModel(BaseUserManager):
 #custom perpmision user obejct
 class User(AbstractBaseUser, PermissionsMixin):
 
-    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=100, unique=True)
     is_active = models.BooleanField(default=True)
+
+
     is_staff = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     objects = UserManagerModel() #Linking usermanagermodel
 
     #human readable name in sql queries
     def __str__(self):
-        return self.email
+        return self.username
 
 
 #user account manager

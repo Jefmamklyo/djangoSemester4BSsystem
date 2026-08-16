@@ -31,6 +31,7 @@
   <ItemGroup>
     <Compile Include="BSCreation\admin.py" />
     <Compile Include="BSCreation\apps.py" />
+    <Compile Include="BSCreation\forms.py" />
     <Compile Include="BSCreation\migrations\__init__.py" />
     <Compile Include="BSCreation\models.py" />
     <Compile Include="BSCreation\tests.py" />
