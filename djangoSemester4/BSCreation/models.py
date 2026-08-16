@@ -16,6 +16,13 @@ class UserManagerModel(BaseUserManager):
         user.save()
         return user
 
+    def create_superuser(self, username, password=None):
+        user = self.create_user(username, password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        return user
+
 
 #custom perpmision user obejct
 class User(AbstractBaseUser, PermissionsMixin):
@@ -39,14 +46,10 @@ class UserAccount(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
-    class meta:
+    class Meta:
         constraints = [
-            models.CheckConstraint(check=models.Q(balance__gte=0), name="balance_gte_0")
+            models.CheckConstraint(condition=models.Q(balance__gte=0), name="balance_gte_0")
         ]
 
 
-
-
-
-#Create your models here.
 

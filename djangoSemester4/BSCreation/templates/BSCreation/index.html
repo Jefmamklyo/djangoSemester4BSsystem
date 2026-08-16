@@ -1,9 +1,13 @@
 <html>
-<head><title></title></head>
+<head><title>DASHBOARD TO CONFIGURE</title></head>
 
 <body>
+<header> DASHBOARD DASHBOARD DASHBOARD</header>
 
-{{ content }}
+    <form action="{% url 'logout'%}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
 
 </body>
 </html>

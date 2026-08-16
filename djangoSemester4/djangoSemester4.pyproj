@@ -35,6 +35,7 @@
     <Compile Include="BSCreation\migrations\__init__.py" />
     <Compile Include="BSCreation\models.py" />
     <Compile Include="BSCreation\tests.py" />
+    <Compile Include="BSCreation\urls.py" />
     <Compile Include="BSCreation\views.py" />
     <Compile Include="BSCreation\__init__.py" />
     <Compile Include="manage.py" />
@@ -45,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BSCreation\templates\BSCreation\index.html" />
+    <Content Include="BSCreation\templates\BSCreation\login.html" />
+    <Content Include="BSCreation\templates\BSCreation\signup.html" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
