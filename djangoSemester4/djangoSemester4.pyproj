@@ -50,6 +50,7 @@
     <Compile Include="merkleTree\migrations\__init__.py" />
     <Compile Include="merkleTree\models.py" />
     <Compile Include="merkleTree\service.py" />
+    <Compile Include="merkleTree\signals.py" />
     <Compile Include="merkleTree\tests.py" />
     <Compile Include="merkleTree\urls.py" />
     <Compile Include="merkleTree\views.py" />
