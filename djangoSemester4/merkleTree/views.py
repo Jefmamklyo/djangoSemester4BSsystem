@@ -39,4 +39,11 @@ def merkleStatus(request):
     for tx in transactions:
         status = MerkleTreeService().merkleProof(tx.id)
         results.append((tx,status))
-    return render(request, "merkleTree/merkleStatus.html", {"results": results})
+
+
+    
+    latest = transactions.first()
+    root_hash = latest.merkleRootHash if latest else None
+
+
+    return render(request, "merkleTree/merkleStatus.html", {"results": results, "root_hash": root_hash,})

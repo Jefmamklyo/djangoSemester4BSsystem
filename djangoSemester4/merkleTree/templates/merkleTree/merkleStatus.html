@@ -5,6 +5,10 @@
 
 <body>
     <h2>Chain Integrity Check</h2>
+    {% if root_hash %}
+    <p><strong>Current Root:</strong> {{ root_hash }}</p>
+    {% endif %}
+
     <a href="{% url 'transfer' %}">Transfer Funds</a>
     <a href="{% url 'transactionList' %}">My Transactions</a>
     <a href="{% url 'merkleStatus' %}">Check Merkle Status</a>
