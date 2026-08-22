@@ -60,7 +60,7 @@
     <Content Include="BSCreation\templates\BSCreation\index.html" />
     <Content Include="BSCreation\templates\BSCreation\login.html" />
     <Content Include="BSCreation\templates\BSCreation\signup.html" />
-    <Content Include="merkleTree\templates\merkleTree\chainStatus.html" />
+    <Content Include="merkleTree\templates\merkleTree\merkleStatus.html" />
     <Content Include="merkleTree\templates\merkleTree\transfer.html" />
     <Content Include="merkleTree\templates\merkleTree\trasactionList.html" />
     <Content Include="requirements.txt" />

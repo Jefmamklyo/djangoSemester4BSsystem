@@ -1,15 +1,13 @@
 <html>
-<head><title>TRANSFER</title></head>
-
+<head>
+    <title>TRANSFER</title>
+</head>
 <body>
-
-    <form method="POST" action="{% url 'merkleTree:generate_merkle_tree' %}">
+    <form method="post">
         {% csrf_token %}
-        <label for="data">Enter data (comma-separated):</label>
-        <input type="text" id="data" name="data" required>
-        <button type="submit">Generate Merkle Tree</button>
+        {{ form.as_p }}
+        <button type="submit">Send</button>
     </form>
-
     <a href="{% url 'transactionList' %}">View transactions</a>
 </body>
 </html>

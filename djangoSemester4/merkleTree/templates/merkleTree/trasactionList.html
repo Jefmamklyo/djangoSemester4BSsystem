@@ -1,30 +1,19 @@
 <html>
 <head>
     <title>TRANSACTION LIST</title>
-
 </head>
-
 <body>
     <a href="{% url 'transfer' %}">Transfer</a>
     <a href="{% url 'merkleStatus' %}">MerkleStatus</a>
     <ul>
-
-        {%for tx in transaction%}
-
+        {% for tx in transactions %}
         <li>
-            {{ tx.id }} — {{ tx.jsonData.amount }} to account {{ tx.jsonData.reciever }}
-
-
-            <br>Leaf hash is:  {{ tx.merkleLeafHash | truncatechars:16 }}
-
-
+            {{ tx.id }} — {{ tx.jsonData.amount }} to account {{ tx.jsonData.receiver }}
+            <br>Leaf hash is: {{ tx.merkleLeafHash|truncatechars:16 }}
         </li>
-
-        {%empty%}
-        <li> No Data</li>
-        {%endfor%}
+        {% empty %}
+        <li>No Data</li>
+        {% endfor %}
     </ul>
-
-
 </body>
 </html>
