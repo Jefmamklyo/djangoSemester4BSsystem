@@ -2,7 +2,10 @@
 <head><title>DASHBOARD TO CONFIGURE</title></head>
 
 <body>
-<header> DASHBOARD DASHBOARD DASHBOARD</header>
+    <header> DASHBOARD DASHBOARD DASHBOARD</header>
+    <a href="{% url 'transfer' %}">Transfer Funds</a>
+    <a href="{% url 'transactionList' %}">My Transactions</a>
+    <a href="{% url 'merkleStatus' %}">Check Chain Integrity</a>
 
     <form action="{% url 'logout'%}" method="post">
         {% csrf_token %}

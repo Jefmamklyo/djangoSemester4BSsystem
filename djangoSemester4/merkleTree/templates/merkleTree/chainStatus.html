@@ -1,11 +1,23 @@
 <html>
 <head>
-    <title></title>
+    <title>MERKLESTATUS</title>
 </head>
 
 <body>
-
-    {{ content }}
+    <h2>Chain Integrity Check</h2>
+    <a href="{% url 'transfer' %}">Transfer</a>
+    <ul>
+        {% for tx, is_valid in results %}
+        <li>
+            #{{ tx.id }} —
+            {% if is_valid %}
+            Verified
+            {% else %}
+            Has been Tamperd with
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
 
 </body>
 </html>
