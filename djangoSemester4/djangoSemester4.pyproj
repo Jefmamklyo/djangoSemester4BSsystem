@@ -46,6 +46,7 @@
     <Compile Include="djangoSemester4\wsgi.py" />
     <Compile Include="merkleTree\admin.py" />
     <Compile Include="merkleTree\apps.py" />
+    <Compile Include="merkleTree\forms.py" />
     <Compile Include="merkleTree\migrations\__init__.py" />
     <Compile Include="merkleTree\models.py" />
     <Compile Include="merkleTree\service.py" />
@@ -58,7 +59,9 @@
     <Content Include="BSCreation\templates\BSCreation\index.html" />
     <Content Include="BSCreation\templates\BSCreation\login.html" />
     <Content Include="BSCreation\templates\BSCreation\signup.html" />
+    <Content Include="merkleTree\templates\merkleTree\chainStatus.html" />
     <Content Include="merkleTree\templates\merkleTree\index.html" />
+    <Content Include="merkleTree\templates\merkleTree\trasactionList.html" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
