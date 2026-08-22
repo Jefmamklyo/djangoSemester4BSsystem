@@ -8,6 +8,8 @@
         {{ form.as_p }}
         <button type="submit">Send</button>
     </form>
-    <a href="{% url 'transactionList' %}">View transactions</a>
+    <a href="{% url 'transfer' %}">Transfer Funds</a>
+    <a href="{% url 'transactionList' %}">My Transactions</a>
+    <a href="{% url 'merkleStatus' %}">Check Merkle Status</a>
 </body>
 </html>

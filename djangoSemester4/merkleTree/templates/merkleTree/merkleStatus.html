@@ -5,7 +5,9 @@
 
 <body>
     <h2>Chain Integrity Check</h2>
-    <a href="{% url 'transfer' %}">Transfer</a>
+    <a href="{% url 'transfer' %}">Transfer Funds</a>
+    <a href="{% url 'transactionList' %}">My Transactions</a>
+    <a href="{% url 'merkleStatus' %}">Check Merkle Status</a>
     <ul>
         {% for tx, is_valid in results %}
         <li>
