@@ -15,7 +15,7 @@
     <ul>
         {% for tx, is_valid in results %}
         <li>
-            #{{ tx.id }} —
+            {{ tx.id }} 
             {% if is_valid %}
             Verified
             {% else %}

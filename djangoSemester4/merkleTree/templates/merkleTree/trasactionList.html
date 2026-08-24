@@ -9,7 +9,7 @@
     <ul>
         {% for tx in transactions %}
         <li>
-            {{ tx.id }} — {{ tx.jsonData.amount }} to account {{ tx.jsonData.receiver }}
+            {{ tx.id }} : {{ tx.jsonData.amount }} to account {{ tx.jsonData.receiver }}
             <br>Leaf hash is: {{ tx.merkleLeafHash|truncatechars:16 }}
         </li>
         {% empty %}
