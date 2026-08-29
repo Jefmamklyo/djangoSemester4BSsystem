@@ -57,9 +57,10 @@ class UserAccount(models.Model):
     
     def save(self, *args, **kwargs):
         #For cryptographycalyl saved account ID's
-        plainNumber = secrets.token_hex(8)
-        self.encryptedAccountID = encrypt(plainNumber)
-        self.accountLookup = hashLookups(plainNumber)
+        if not self.accountLookup:
+            plainNumber = secrets.token_hex(8)
+            self.encryptedAccountID = encrypt(plainNumber)
+            self.accountLookup = hashLookups(plainNumber)
 
         if not self.encryptedBalance:
             self.encryptedBalance = encrypt("0.00")

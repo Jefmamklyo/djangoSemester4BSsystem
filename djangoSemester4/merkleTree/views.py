@@ -7,6 +7,7 @@ from .forms import TransferForm
 from .service import MerkleTreeService
 from django.db import transaction 
 
+from BSCreation.crypt import hashLookups
 
 
 
@@ -17,10 +18,12 @@ def transferView(request):
     if request.method == "POST":
         form = TransferForm(request.POST) #validate form
         if form.is_valid():
-            receiver_id = form.cleaned_data["reciever"] #gather post data
+            receiverLookup = hashLookups(form.cleaned_data["reciever"]) #gegt id but in hashed form through conversion
+ 
             amount = form.cleaned_data["amount"]#gather post data
 
-            receiver = UserAccount.objects.filter(id=receiver_id).first() #get reciveer id
+
+            receiver = UserAccount.objects.filter(encryptedAccountID=receiverLookup).first() #get reciveer id and chekck if they existst
             #valdiation methods so transfer itself is valid
             if receiver is None:
                 form.add_error("reciever", "That account does not exist.")
