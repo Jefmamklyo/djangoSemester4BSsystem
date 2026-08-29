@@ -75,3 +75,12 @@ def merkleStatus(request):
 
 
     return render(request, "merkleTree/merkleStatus.html", {"results": results, "root_hash": root_hash,})
+
+
+
+
+
+
+
+
+#FINISH COMMIT
