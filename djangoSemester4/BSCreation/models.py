@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from .crypt import hashLookups, encrypt, decrypt
 
+from decimal import Decimal
+
 #base user manager modelobject
 class UserManagerModel(BaseUserManager):
     def create_user(self, username, password = None):
@@ -68,16 +70,19 @@ class UserAccount(models.Model):
 
     @property #getter
     def balance(self):
-        return 
+        retr = Decimal(decrypt(self.encryptedBalance))
+        return retr
 
     @balance.setter
-    def balance(self):
-        pass
+    def balance(self, amount):
+         if amount < 0:
+            raise ValueError("Balance cannot be negative")
+         self.encryptedBalance = encrypt(str(amount))
+        
 
-    class Meta:
-        constraints = [
-            models.CheckConstraint(condition=models.Q(balance__gte=0), name="balance_gte_0")
-        ]
+    def getAccountNumber(self):
+        retr = decrypt(self.encryptedAccountID) #decrypts and returns accoutn ID for lookups
+        return retr
 
 
 
