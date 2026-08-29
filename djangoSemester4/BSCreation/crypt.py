@@ -6,11 +6,11 @@ from django.conf import settings
 f = Fernet(settings.FERNET_ENCRYPT_KEY)
 
 def encrypt(plainText):
-    encText= f.encrypt(plainText.encode().decode())
+    encText= f.encrypt(plainText.encode()).decode()
     return encText
 
 def decrypt(encText):
-    decText = f.decrypt(encText).decode()
+    decText = f.decrypt(encText.encode()).decode()
     return decText
 
 

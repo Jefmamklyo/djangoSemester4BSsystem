@@ -50,9 +50,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 class UserAccount(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     
-    encryptedBalance = models.CharField(max_length=255)
-    encryptedAccountID= models.CharField(max_length=255)
-    accountLookup = models.CharField(max_length=64, unique=True)
+    encryptedBalance = models.CharField(max_length=255, default="")
+    encryptedAccountID= models.CharField(max_length=255, default="")
+    accountLookup = models.CharField(max_length=64, unique=True, default="")
 
     
     def save(self, *args, **kwargs):

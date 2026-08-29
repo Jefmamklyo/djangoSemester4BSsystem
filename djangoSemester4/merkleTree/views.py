@@ -23,7 +23,7 @@ def transferView(request):
             amount = form.cleaned_data["amount"]#gather post data
 
 
-            receiver = UserAccount.objects.filter(encryptedAccountID=receiverLookup).first() #get reciveer id and chekck if they existst
+            receiver = UserAccount.objects.filter(accountLookup=receiverLookup).first() #get reciveer id and chekck if they existst
             #valdiation methods so transfer itself is valid
             if receiver is None:
                 form.add_error("reciever", "That account does not exist.")
@@ -41,8 +41,8 @@ def transferView(request):
 
                     #send data to jsonData for merkle tree
                     seralisedData = {
-                        "sender": sender.id,
-                        "receiver": receiver.id,
+                        "sender": sender.accountLookup,
+                        "receiver": receiver.accountLookup,
                         "amount": str(amount),
                     }
                     Transaction.objects.create(account=sender, jsonData=seralisedData)
@@ -51,7 +51,7 @@ def transferView(request):
     else:
         form = TransferForm()
 
-    return render(request, "merkleTree/transfer.html", {"form": form, "balance": sender.balance, "id": sender.id})
+    return render(request, "merkleTree/transfer.html", {"form": form, "balance": sender.balance, "id": sender.getAccountNumber()})
 
 
 @login_required
