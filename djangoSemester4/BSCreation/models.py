@@ -1,7 +1,10 @@
+from pydoc import plain
+import secrets
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
-
+from .crypt import hashLookups, encrypt, decrypt
 
 #base user manager modelobject
 class UserManagerModel(BaseUserManager):
@@ -44,9 +47,32 @@ class User(AbstractBaseUser, PermissionsMixin):
 #user account manager
 class UserAccount(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    
+    encryptedBalance = models.CharField(max_length=255)
+    encryptedAccountID= models.CharField(max_length=255)
+    accountLookup = models.CharField(max_length=64, unique=True)
+
+    
+    def save(self, *args, **kwargs):
+        #For cryptographycalyl saved account ID's
+        plainNumber = secrets.token_hex(8)
+        self.encryptedAccountID = encrypt(plainNumber)
+        self.accountLookup = hashLookups(plainNumber)
+
+        if not self.encryptedBalance:
+            self.encryptedBalance = encrypt("0.00")
 
 
+
+        super().save(*args, **kwargs)
+
+    @property #getter
+    def balance(self):
+        return 
+
+    @balance.setter
+    def balance(self):
+        pass
 
     class Meta:
         constraints = [
