@@ -128,3 +128,8 @@ STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 
 #LOGIN STUFF
 LOGIN_REDIRECT_URL = "index" 
+
+
+
+#ENCRYPTION KEY FOR FERNET
+FERNET_ENCRYPT_KEY = b'3v5wVmCARmmXSqAebxYOzxtDAZMUWfJXo3rlaXsrSzE'

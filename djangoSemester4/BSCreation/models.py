@@ -7,6 +7,7 @@ from django.contrib.auth.base_user import BaseUserManager
 class UserManagerModel(BaseUserManager):
     def create_user(self, username, password = None):
         #never save a user without a valid username  ||||| Please accesses later to display using django.messages
+        #Delete once you display with messages
         if not username:
             raise ValueError("User must have a valid username")
 
@@ -44,6 +45,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 class UserAccount(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+
 
     class Meta:
         constraints = [
