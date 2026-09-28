@@ -2,7 +2,8 @@ import json
 from .models import Transaction
 from pymerkle import InmemoryTree, verify_inclusion
 from django.db import transaction as db_transaction
-
+from pymerkle.hasher import MerkleHasher
+from pymerkle.hasher import MerkleHasher
 
 class MerkleTreeService:
     #Helper function
@@ -40,23 +41,10 @@ class MerkleTreeService:
     
 
 
+
+
     def merkleProof(self, ID):
-        tree, transactions = self.buildMerkleTree()
-
-        #Stores the id of transactions in chronological orderas it is a for loop
-        transactionIds=[tx.id for tx in transactions]
-        
-        
-        #Input to check if a specific transaction is valid (retrieve specfic transaction)
-        transactionIndex = transactionIds.index(ID) + 1
-
-        inclusionProof = tree.prove_inclusion(transactionIndex, tree.get_size())
-
-        base = tree.get_leaf(transactionIndex)
-        root = tree.get_state(tree.get_size())
-
-        try:
-            verify_inclusion(base, root, inclusionProof)
-            return True
-        except Exception as e:
-            return False
+        tx = Transaction.objects.get(id=ID)
+        hasher = MerkleHasher('sha256')
+        recomputedLeaf = hasher.hash_buff(self.seralizeTransaction(tx))
+        return recomputedLeaf == bytes.fromhex(tx.merkleLeafHash)

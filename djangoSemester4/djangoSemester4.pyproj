@@ -36,7 +36,9 @@
     <Compile Include="BSCreation\forms.py" />
     <Compile Include="BSCreation\migrations\__init__.py" />
     <Compile Include="BSCreation\models.py" />
+    <Compile Include="BSCreation\physicalEntrophy.py" />
     <Compile Include="BSCreation\tests.py" />
+    <Compile Include="BSCreation\testTamper.py" />
     <Compile Include="BSCreation\urls.py" />
     <Compile Include="BSCreation\views.py" />
     <Compile Include="BSCreation\__init__.py" />
