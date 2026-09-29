@@ -1,16 +1,33 @@
 import hashlib
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, MultiFernet
+
 from django.conf import settings
 
-#initilisae fenet and give it the key to accesses
-f = Fernet(settings.FERNET_ENCRYPT_KEY)
+import json
+from pathlib import Path
+
+
+def getKeyFile():
+    return Path(getattr(settings, "FERNET_KEYFILE", Path(settings.BASE_DIR) / "fernet_keys.json"))
+
+def loadKeys():
+    if getKeyFile().exists():
+        return json.loads(getKeyFile().read_text()) #returnn key file 
+    key = settings.FERNET_ENCRYPT_KEY
+
+    if isinstance(key,bytes): #null checking
+        key = key.decode()
+    return [key]
+
+def cryptConverter():
+    return MultiFernet([Fernet(k) for k in loadKeys()])
 
 def encrypt(plainText):
-    encText= f.encrypt(plainText.encode()).decode()
+    encText= cryptConverter().encrypt(plainText.encode()).decode()
     return encText
 
 def decrypt(encText):
-    decText = f.decrypt(encText.encode()).decode()
+    decText = cryptConverter().decrypt(encText.encode()).decode()
     return decText
 
 
