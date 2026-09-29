@@ -34,6 +34,9 @@
     <Compile Include="BSCreation\apps.py" />
     <Compile Include="BSCreation\crypt.py" />
     <Compile Include="BSCreation\forms.py" />
+    <Compile Include="BSCreation\management\commands\rotateKeys.py" />
+    <Compile Include="BSCreation\management\commands\__init__.py" />
+    <Compile Include="BSCreation\management\__init__.py" />
     <Compile Include="BSCreation\migrations\__init__.py" />
     <Compile Include="BSCreation\models.py" />
     <Compile Include="BSCreation\physicalEntrophy.py" />
@@ -70,7 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BSCreation\" />
+    <Folder Include="BSCreation\management\commands\" />
     <Folder Include="BSCreation\migrations\" />
+    <Folder Include="BSCreation\management\" />
     <Folder Include="BSCreation\templates\" />
     <Folder Include="BSCreation\templates\BSCreation\" />
     <Folder Include="djangoSemester4\" />

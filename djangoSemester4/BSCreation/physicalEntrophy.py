@@ -40,12 +40,20 @@ class CamSource(EnrophySource):
             if ret1 and ret2:
                 absDifference = cv.absdiff(frame2, frame1)
 
-
-            
-            
             #bufer to byte encoding
-            _, buffer = cv.imencode('.jpg', frame)
+            _, buffer = cv.imencode('.jpg', absDifference)
+            return buffer.tobytes()
+            
 
             
 #Key deriivitive
 
+def deriveKey(sources):
+    pool = bytearray() #byte array instantiation for zeriong
+    for s in sources:
+        pool.extend(s.collect())
+
+    hashedPool = hashlib.sha256(memoryview(pool)).digest() #hash retunr values 
+
+    pool[:] = bytes(len(pool)) #zeriong process
+    return base64.urlsafe_b64encode(hashedPool)
