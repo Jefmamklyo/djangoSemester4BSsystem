@@ -39,4 +39,4 @@ class Command(BaseCommand):
               account.encryptedAccountID = cryptogReassign.rotate(account.encryptedAccountID.encode()).decode()
           UserAccount.objects.bulk_update(accounts, ["encryptedBalance", "encryptedAccountID"])
 
-      self.stdout.write(self.style.SUCCESS(f"Keys rotated on accounts. Total accounts = {len(accounts)}, the accounts are {list(accounts)}"))
+      self.stdout.write(self.style.SUCCESS(f"Keys rotated |||| Total accounts = {len(accounts)} |||| Accounts Namnes: {list(accounts)}"))
