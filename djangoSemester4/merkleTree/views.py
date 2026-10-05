@@ -13,8 +13,8 @@ from BSCreation.crypt import hashLookups
 
 @login_required
 def transferView(request):
-    sender = get_object_or_404(UserAccount, user=request.user)# get sender object
 
+    sender = get_object_or_404(UserAccount, user=request.user)# get sender object
     if request.method == "POST":
         form = TransferForm(request.POST) #validate form
         if form.is_valid():

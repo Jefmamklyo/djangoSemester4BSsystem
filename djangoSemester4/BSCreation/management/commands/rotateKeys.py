@@ -17,9 +17,9 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **opts):
-      source = [OSRandSource]
+      source = [OSRandSource()]
       if opts["source"] == "webcam":
-          source.insert(0, CamSource)
+          source.insert(0, CamSource())
 
 
       #key instantiaon and loading
@@ -39,4 +39,4 @@ class Command(BaseCommand):
               account.encryptedAccountID = cryptogReassign.rotate(account.encryptedAccountID.encode()).decode()
           UserAccount.objects.bulk_update(accounts, ["encryptedBalance", "encryptedAccountID"])
 
-      self.std.write(self.style.SUCCESS(f"Keys rotated on accounts. Total accounts = {len(accounts)}, the accounts are {list(accounts)}"))
+      self.stdout.write(self.style.SUCCESS(f"Keys rotated on accounts. Total accounts = {len(accounts)}, the accounts are {list(accounts)}"))

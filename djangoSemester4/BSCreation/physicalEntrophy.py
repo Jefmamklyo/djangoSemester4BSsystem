@@ -51,7 +51,7 @@ class CamSource(EnrophySource):
 def deriveKey(sources):
     pool = bytearray() #byte array instantiation for zeriong
     for s in sources:
-        pool.extend(s.collect())
+        pool.extend(s.gatherSource())
 
     hashedPool = hashlib.sha256(memoryview(pool)).digest() #hash retunr values 
 
