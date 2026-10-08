@@ -10,3 +10,21 @@ class Transaction(models.Model):
 
     def __str__(self):
         return super().__str__()
+
+
+##-------------------------------#
+#######RATE LIMITING Models#######
+#--------------------------------#
+
+from django.contrib.auth import get_user_model
+
+#user refernece
+User = get_user_model()
+class RateLimiterModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    createdAt = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['user', 'createdAt'])
+        ]

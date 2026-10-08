@@ -1,21 +1,4 @@
-##-------------------------------#
-#######RATE LIMITING Models#######
-#--------------------------------#
 
-
-from django.db import models
-from django.contrib.auth import get_user_model
-
-#user refernece
-User = get_user_model()
-class RateLimiterModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    createdAt = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        indexes = [
-            models.Index(fields=['user', 'createdAt'])
-        ]
 
 #---------------------------------#
 ########RATE LIMITING LOGIC########
@@ -24,7 +7,7 @@ class RateLimiterModel(models.Model):
 from datetime import timedelta
 from django.utils import timezone
 from dataclasses import dataclass
-
+from merkleTree.models import RateLimiterModel
 
 
 @dataclass(slots = True)
@@ -33,7 +16,7 @@ class SlidingWindowRateLimiter:
     windowSeconds: int
     
     #sliding windwo logic for request
-    def allowRequest(self):
+    def allowRequest(self, user):
         now = timezone.now()
 
         #define cutoff between secodns
