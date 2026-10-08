@@ -8,8 +8,9 @@ from .service import MerkleTreeService
 from django.db import transaction 
 
 from BSCreation.crypt import hashLookups
+from BSCreation.rateLimiting import SlidingWindowRateLimiter
 
-
+rateLimiter = SlidingWindowRateLimiter(limit=5, windowSeconds=60)  #5 Requests per minute
 
 @login_required
 def transferView(request):
