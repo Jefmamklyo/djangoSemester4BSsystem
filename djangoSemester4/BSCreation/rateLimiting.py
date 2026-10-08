@@ -23,7 +23,10 @@ class SlidingWindowRateLimiter:
         #define cutoff between secodns
         cutoff = now- timedelta(seconds=self.windowSeconds)
 
-        #get user from request
+        #deelte older requests
+        RateLimiterModel.objects.filter(user=user, createdAt__lt=cutoff).delete()  
+
+        #count the amount of requests in a window
         count = RateLimiterModel.objects.filter(user=user, createdAt__gte = cutoff).count()
 
         #filter count based on limit
