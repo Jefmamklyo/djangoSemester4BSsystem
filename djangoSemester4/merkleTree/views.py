@@ -1,3 +1,5 @@
+from urllib import response
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -17,6 +19,11 @@ def transferView(request):
 
     sender = get_object_or_404(UserAccount, user=request.user)# get sender object
     if request.method == "POST":
+        #check sliding window
+        if not SlidingWindowRateLimiter.allowRequest(request.user):
+            delay = SlidingWindowRateLimiter.retryAfter(request.user)
+            
+            return response.HttpResponse(f"Rate limit has delay {delay:.2f} ") 
         form = TransferForm(request.POST) #validate form
         if form.is_valid():
             receiverLookup = hashLookups(form.cleaned_data["reciever"]) #gegt id but in hashed form through conversion
