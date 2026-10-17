@@ -9,6 +9,14 @@ import time
 from django.utils import timezone
 from dataclasses import dataclass
 from merkleTree.models import RateLimiterModel
+from django.db import transaction 
+import math as maths
+
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 
 @dataclass(slots = True)
@@ -18,30 +26,38 @@ class SlidingWindowRateLimiter:
     
     #sliding windwo logic for request
     def allowRequest(self, user):
-        now = timezone.now()
+        with transaction.atomic():
+            #make atomic to fix concurrency
+            User.objects.select_for_update().get(pk=user.pk)
 
-        #define cutoff between secodns
-        cutoff = now- timedelta(seconds=self.windowSeconds)
+            now = timezone.now()
 
-        #deelte older request (PRUNING)
-        RateLimiterModel.objects.filter(user=user, createdAt__lt=cutoff).delete()  
+            #define cutoff between secodns
+            cutoff = now- timedelta(seconds=self.windowSeconds)
 
-        #count the amount of requests in a window
-        count = RateLimiterModel.objects.filter(user=user, createdAt__gte = cutoff).count()
+            #deelte older request (PRUNING)
+            RateLimiterModel.objects.filter(user=user, createdAt__lte=cutoff).delete()  
 
-        #filter count based on limit
-        if count >= self.limit:
-            return False #process return value
-        RateLimiterModel.objects.create(user=user)
-        return True
+            #count the amount of requests in a window
+            #ADDED A FIX FOR ENTRY EXPIRY EDGECASE
+            count = RateLimiterModel.objects.filter(user=user, createdAt__gte = cutoff).count()
+            if count >= self.limit:
+                return False 
+
+
+            RateLimiterModel.objects.create(user=user)
+            return True
 
     def retryAfter(self, user):
-        now = timezone.now()
+        now = timezone.now()    
         cutoff = now - timedelta(seconds=self.windowSeconds)
 
         #get and process oldest request to wait for it to expire
-        oldestRequest = RateLimiterModel.objects.filter(user=user, createdAt__gte=cutoff).order_by('createdAt').first()
+        oldestRequest = RateLimiterModel.objects.filter(user=user, createdAt__gt=cutoff).order_by('createdAt').first()
         if oldestRequest == None:
             return 0
-        expireTime = oldestRequest.createdAt + timedelta(seconds = self.windowSeconds)
-        return max(0,(expireTime-now).total_seconds())
+        expireTime = oldestRequest.createdAt + timedelta(seconds = self.windowSeconds)  
+
+        seconds = maths.ceil((expireTime-now).total_seconds())
+
+        return max(1,seconds)
