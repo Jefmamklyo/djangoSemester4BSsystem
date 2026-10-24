@@ -54,6 +54,11 @@ class UserAccount(models.Model):
     encryptedAccountID= models.CharField(max_length=255, default="")
     accountLookup = models.CharField(max_length=64, unique=True, default="")
 
+
+    encryptedPaymentMethod = models.CharField(max_length=255, blank=True, default="")
+
+
+
     
     def save(self, *args, **kwargs):
         #For cryptographycalyl saved account ID's
@@ -86,4 +91,26 @@ class UserAccount(models.Model):
         return retr
 
 
+    
+
+
+    ##PETE STRIPE INTEGRATION
+
+
+    def encryptToken(self, token):
+        self.encryptedPaymentMethod = encrypt(token)
+
+    def decryptToken(self):
+        if self.encryptedPaymentMethod:
+            return decrypt(self.encryptedPaymentMethod) 
+        else:
+            return(None)
+
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(condition=(models.Q(encryptedPaymentMethod="")| 
+            models.Q(encryptedPaymentMethod__startswith="gAAAA")), name="payment_method_is_ciphertext"
+            )
+        ]
 

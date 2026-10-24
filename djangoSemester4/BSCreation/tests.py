@@ -55,8 +55,13 @@ class RateLimiterBehaviorTest(TestCase):
            hits.append(self.requestHelper(61)) #5 requests after window has expired
        self.assertEqual(hits, expectedCases)
     
-   @testLogger
+
+
+
    #Windwo edge case
+    
+
+
    def testWindowEdgeCase(self):
        for i in range(5):
            self.requestHelper(0)

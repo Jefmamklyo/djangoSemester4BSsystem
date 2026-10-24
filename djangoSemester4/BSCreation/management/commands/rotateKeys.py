@@ -37,6 +37,11 @@ class Command(BaseCommand):
                #multifernet implicit key rotation
               account.encryptedBalance = cryptogReassign.rotate(account.encryptedBalance.encode()).decode()
               account.encryptedAccountID = cryptogReassign.rotate(account.encryptedAccountID.encode()).decode()
-          UserAccount.objects.bulk_update(accounts, ["encryptedBalance", "encryptedAccountID"])
+              if account.encryptedPaymentMethod:
+                  account.encryptedPaymentMethod = cryptogReassign.rotate(account.encryptedPaymentMethod.encode()).decode()
+              else:
+                  account.encryptedPaymentMethod = ""
+     
+          UserAccount.objects.bulk_update(accounts, ["encryptedBalance", "encryptedAccountID", "encryptedPaymentMethod"])
 
       self.stdout.write(self.style.SUCCESS(f"Keys rotated |||| Total accounts = {len(accounts)} |||| Accounts Namnes: {list(accounts)}"))

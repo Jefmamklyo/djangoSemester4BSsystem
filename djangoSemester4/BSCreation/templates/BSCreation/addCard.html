@@ -1,0 +1,54 @@
+
+
+<h2>Link a card</h2>
+<form id="card-form">
+    {% csrf_token %}
+    <div id="card-element"></div>
+    <p id="card-error"></p>
+    <button type="submit">Save card</button> 
+</form>
+
+{{ stripe_publishable_key|json_script:"stripe-key" }}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+
+    //initiliase stripe with Document Object Model (DOM) public key
+    const stripe = Stripe(JSON.parse(document.getElementById("stripe-key").textContent));
+
+    //Pete 
+    const elements = stripe.elements();
+
+    const card = elements.create("card");
+
+    card.mount("#card-element");
+
+    //Integration
+
+    const cardForm = document.getElementById("card-form");
+
+    cardForm.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        //generate stripe payemenet method (object -> paymentMethod)
+        const { paymentMethod, error } = await stripe.createPaymentMethod({ type: "card", card });
+
+        //Checks return
+        if (error) {
+            document.getElementById("card-error").textContent = error.message;
+            return;
+        }
+
+        //Send paymenentMethod to backend as json payload
+        await fetch('{% url "saveCard%"}', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CRSFToken": document.querySelector('[name=csrfmiddlewaretoken]').value //crsf protection
+
+            },
+            body: JSON.stringify({ payment_method_id: paymentMethod.id }),
+
+        });
+    });
+</script>

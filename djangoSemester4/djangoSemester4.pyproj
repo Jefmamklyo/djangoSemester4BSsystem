@@ -64,6 +64,8 @@
     <Compile Include="merkleTree\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".env" />
+    <Content Include="BSCreation\templates\BSCreation\addCard.html" />
     <Content Include="BSCreation\templates\BSCreation\index.html" />
     <Content Include="BSCreation\templates\BSCreation\login.html" />
     <Content Include="BSCreation\templates\BSCreation\signup.html" />

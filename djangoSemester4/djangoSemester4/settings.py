@@ -13,6 +13,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import posixpath
 
+
+##Stripe publishable keys
+from dotenv import load_dotenv
+
+load_dotenv()
+STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -39,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
       "BSCreation",
       "merkleTree"
-]
+      ]
 
 # Middleware framework
 # https://docs.djangoproject.com/en/2.1/topics/http/middleware/
@@ -133,3 +140,5 @@ LOGIN_REDIRECT_URL = "index"
 
 #ENCRYPTION KEY FOR FERNET
 FERNET_ENCRYPT_KEY = 'tPG4-yOTPDx00Dzn6mwFH3nZ6m2F9qjDBq7G16nKISc='
+
+
