@@ -8,7 +8,8 @@ from pathlib import Path
 
 
 def getKeyFile():
-    return Path(getattr(settings, "FERNET_KEYFILE", Path(settings.BASE_DIR) / "fernet_keys.json"))
+     return Path(settings.BASE_DIR) / "fernet_keys.json"
+
 
 def loadKeys():
     if getKeyFile().exists():

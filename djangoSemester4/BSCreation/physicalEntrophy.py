@@ -1,7 +1,7 @@
 import base64
 import hashlib
 import os
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 import cv2 as cv
 
@@ -16,7 +16,7 @@ class CamManager():
         return False
 
 #abstract (VIRTUAL) Methods for overiding later
-class EnrophySource:
+class EnrophySource(ABC):
     @abstractmethod
     def gatherSource(self):
         pass
@@ -33,6 +33,9 @@ class CamSource(EnrophySource):
     def gatherSource(self):
         with CamManager() as cam:
             #read a set amount of frames
+            for _ in range(5):  #warm up frames
+                cam.read()
+
             ret1, frame1 = cam.read()
             ret2, frame2 = cam.read()
 

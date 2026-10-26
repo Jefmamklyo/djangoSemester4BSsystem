@@ -53,7 +53,7 @@ def saveCard(request):
     if isinstance(payload, dict):
         form = cardTokenForm(payload)
     else:
-        form = {} #empty value
+        form = cardTokenForm({}) #empty value
 
     
     if not form.is_valid():
