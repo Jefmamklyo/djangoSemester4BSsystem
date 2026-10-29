@@ -110,7 +110,7 @@ class UserAccount(models.Model):
     class Meta:
         constraints = [
             models.CheckConstraint(condition=(models.Q(encryptedPaymentMethod="")| 
-            models.Q(encryptedPaymentMethod__startswith="gAAAA")), name="payment_method_is_ciphertext"
+            models.Q(encryptedPaymentMethod__startswith="gAAAA")), name="cipherTextPaymentMethod"
             )
         ]
 
