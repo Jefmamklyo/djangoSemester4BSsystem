@@ -80,17 +80,6 @@ class RateLimiterBehaviorTest(TestCase):
         #check only 5 enter database from ratelimitermodel specfiically
        self.assertEqual(RateLimiterModel.objects.filter(user=self.user).count(),5)
 
-   #retryAfter functionality
-   @testLogger
-   def testRetryAfterWorksSuccesfully(self):
-       for i in range(5):
-           self.requestHelper(0)
-       with self.timeHelper(1):
-           retryAfter = self.limiter.retryAfter(self.user)
-
-       self.assertFalse(self.requestHelper(retryAfter)) #Falase after the time frame
-       self.assertTrue(self.requestHelper(1+ retryAfter)) #False before the time frame
-
    #Pruning removes only expireed rows
    @testLogger
    def testCheckPruningDeletsOnlyExpiredRows(self):

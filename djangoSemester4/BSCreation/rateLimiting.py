@@ -53,9 +53,8 @@ class SlidingWindowRateLimiter:
         cutoff = now - timedelta(seconds=self.windowSeconds)
 
         #get and process oldest request to wait for it to expire
-        oldestRequest = RateLimiterModel.objects.filter(user=user, createdAt__gt=cutoff).order_by('createdAt').first()
-        if oldestRequest == None: #null checking
-            return 0
+        oldestRequest = RateLimiterModel.objects.filter(user=user, createdAt__gte=cutoff).order_by('createdAt').first()
+        
         expireTime = oldestRequest.createdAt + timedelta(seconds = self.windowSeconds)  
 
         seconds = (expireTime-now).total_seconds()

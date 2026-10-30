@@ -10,7 +10,7 @@ from BSCreation.models import UserAccount
 
 
 class Command(BaseCommand):
-    help = "Generate and (rotate) keys"
+    help = "generate/rotate keys"
 
 
     def handle(self, *args, **opts):
