@@ -3,6 +3,7 @@
 import unittest
 
 import django
+from django import test
 from django.test import TestCase, TransactionTestCase
 from .models import User
 

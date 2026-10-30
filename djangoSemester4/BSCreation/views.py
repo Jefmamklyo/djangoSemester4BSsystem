@@ -37,8 +37,8 @@ class signUpView(CreateView):
 def addCard__(request):
     account = get_object_or_404(UserAccount, user=request.user)
     return render(request, "BSCreation/addCard.html", {
-        "stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY,
-        "hasCard": bool(account.encryptedPaymentMethod),
+        "stripePublishableKey": settings.STRIPE_PUBLISHABLE_KEY,
+        "hashCard": bool(account.encryptedPaymentMethod),
     })
 
 

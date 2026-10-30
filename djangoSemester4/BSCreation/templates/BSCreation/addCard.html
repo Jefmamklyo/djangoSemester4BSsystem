@@ -8,7 +8,7 @@
     <button type="submit">Save card</button> 
 </form>
 
-{{ stripe_publishable_key|json_script:"stripe-key" }}
+{{ stripePublishableKey|json_script:"stripe-key" }}
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 
@@ -44,7 +44,7 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CRSFToken": document.querySelector('[name=csrfmiddlewaretoken]').value //crsf protection
+                "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value //crsf protection
 
             },
             body: JSON.stringify({ payment_method_id: paymentMethod.id }),
