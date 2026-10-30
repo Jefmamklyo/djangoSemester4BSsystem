@@ -30,9 +30,7 @@ class signUpView(CreateView):
         UserAccount.objects.create(user=self.object)
         return response
 
-
-
-
+    
 @login_required
 def addCard__(request):
     account = get_object_or_404(UserAccount, user=request.user)

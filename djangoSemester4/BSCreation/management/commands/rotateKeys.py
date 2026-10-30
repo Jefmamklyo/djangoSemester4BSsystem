@@ -10,11 +10,16 @@ from BSCreation.models import UserAccount
 
 
 class Command(BaseCommand):
-    help = "Generate and rottae keys"
+    help = "Generate and (rotate) keys"
+
+    def add_arguments(self, parser):
+        parser.add_argument("--source", choices=["webcam", "os"], default="webcam")
 
 
     def handle(self, *args, **opts):
-      source = [CamSource(), OSRandSource()]
+      source = [OSRandSource()]
+      if opts["source"] == "webcam":
+          source.insert(0, CamSource())
 
 
       #key instantiaon and loading
