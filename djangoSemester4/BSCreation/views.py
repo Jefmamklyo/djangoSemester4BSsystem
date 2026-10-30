@@ -32,11 +32,9 @@ class signUpView(CreateView):
 
     
 @login_required
-def addCard__(request):
-    account = get_object_or_404(UserAccount, user=request.user)
+def AddCard(request):
     return render(request, "BSCreation/addCard.html", {
-        "stripePublishableKey": settings.STRIPE_PUBLISHABLE_KEY,
-        "hashCard": bool(account.encryptedPaymentMethod),
+        "stripePublishableKey": settings.STRIPE_PUBLISHABLE_KEY
     })
 
 

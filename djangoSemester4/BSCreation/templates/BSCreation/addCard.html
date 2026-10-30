@@ -8,13 +8,12 @@
     <button type="submit">Save card</button> 
 </form>
 
-{{ stripePublishableKey|json_script:"stripe-key" }}
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 
 
     //initiliase stripe with Document Object Model (DOM) public key
-    const stripe = Stripe(JSON.parse(document.getElementById("stripe-key").textContent));
+    const stripe = Stripe("{{stripePublishableKey}}");
 
     //Pete 
     const elements = stripe.elements();
@@ -47,7 +46,7 @@
                 "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value //crsf protection
 
             },
-            body: JSON.stringify({ payment_method_id: paymentMethod.id }),
+            body: JSON.stringify({ paymentMethodId: paymentMethod.id }),
 
         });
     });

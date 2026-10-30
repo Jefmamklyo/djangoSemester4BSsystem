@@ -4,7 +4,7 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
 from django.urls import path
-from .views import signUpView, IndexView, addCard__, saveCard
+from .views import signUpView, IndexView, AddCard, saveCard
 
 
 urlpatterns = [
@@ -14,6 +14,6 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
     
     #pet integration
-    path("card/", addCard__, name="addCard"),
+    path("card/", AddCard, name="addCard"),
     path("card/save/", saveCard, name="saveCard")
 ]

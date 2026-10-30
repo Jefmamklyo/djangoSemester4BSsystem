@@ -66,7 +66,7 @@ class RateLimiterBehaviorTest(TestCase):
    def testWindowEdgeCase(self):
        for i in range(5):
            self.requestHelper(0)
-       expectedCases = [(1,False), (59,False), (60,True), (61,True)] #test all cases (lower, edge, upper, beyond)
+       expectedCases = [(1,False), (59,False), (60,True), (61,True)] #(lower, lower, edge, upper)
        for time, expected in expectedCases:
            with self.subTest(seconds=time):
                 self.assertEqual(self.requestHelper(time), expected)
@@ -132,10 +132,13 @@ class SlidingWindowConcurrencyTest(TransactionTestCase):
                 connection.close() 
 
         with ThreadPoolExecutor(max_workers=self.TestInstances) as TPE:
-            return sum(TPE.map(threadFunction, range(self.TestInstances)))
+            threadRet = list(TPE.map(threadFunction, range(self.TestInstances)))
+            
+            return threadRet.count(True)
 
-
+    @testLogger
     def testConcurrency(self):
         for  i in range(10):
             user = User.objects.create_user(username=f"testuser{i}", password="testpassword")
+
             self.assertEqual(self.deterministicThreadCreation(user),5) #only 5 requests should be allowed
