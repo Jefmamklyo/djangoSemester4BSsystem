@@ -23,8 +23,8 @@ def loadKeys():
         return json.loads(getKeyFile().read_text()) #returnn key file 
     key = settings.FERNET_ENCRYPT_KEY
 
-    if isinstance(key,bytes): #null checking
-        key = key.decode()
+    
+    key = key.decode()
     return [key]
 
 def cryptConverter():
