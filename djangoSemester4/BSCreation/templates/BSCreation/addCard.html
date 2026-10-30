@@ -39,7 +39,7 @@
         }
 
         //Send paymenentMethod to backend as json payload
-        await fetch('{% url "saveCard%" %}', {
+        await fetch('{% url "saveCard" %}', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -8,13 +8,13 @@ from pathlib import Path
 
 
 def getKeyFile():
-     path = Path(settings.BASE_DIR) / "fernet_keys.json"
+     path = Path(settings.BASE_DIR) / "fernetKeys.json"
 
      if not path.exists():
          print("Instantiated new path at base directory")
          path.write_text(json.dumps({}))
 
-     return Path(settings.BASE_DIR) / "fernet_keys.json"
+     return path
 
 
 def loadKeys():
